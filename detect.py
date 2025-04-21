@@ -1,14 +1,17 @@
+from PIL import Image
 from ultralytics import YOLO
 
 
 def Detect(source):
+    img = Image.open(source)
+
     model = YOLO(
         model="bdmod/bdmod.onnx",
         task="detect",
     )
 
     result = model.predict(
-        source=source,
+        source=img,
         conf=0.5,
         iou=0.4,
         imgsz=640,
