@@ -13,14 +13,14 @@ def Detect(source):
     result = model.predict(
         source=img,
         conf=0.5,
-        iou=0.4,
-        imgsz=640,
+        iou=0.3,
         device="cpu",
     )
 
     img_result = result[0].plot(
-        font_size=14,
-        line_width=2,
+        font_size=18,
+        line_width=3,
         color_mode="instance",
     )
+
     return img_result
