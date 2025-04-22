@@ -5,7 +5,7 @@ from ultralytics import YOLO
 def Analyzer(img):
     img = Image.open(img)
 
-    model = YOLO(f"./seg-model/model.onnx", task="segment")
+    model = YOLO(f"./bdmod/bdmod.onnx", task="segment")
 
     pred = model.predict(
         source=img,
