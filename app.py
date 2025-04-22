@@ -6,7 +6,7 @@ st.set_page_config("BurnAlyze | detect & classify", initial_sidebar_state="expan
 st.markdown(f"<style>{open("stylee/style.css").read()}</style>", unsafe_allow_html=True)
 
 st.header("BurnAlyze")
-st.subheader("Detect and classify burn severity levels with AI-driven image segmentation.")
+st.subheader("Detect and classify burn severity levels.")
 
 _, container, _ = st.columns([2,8,2])
 with container:
