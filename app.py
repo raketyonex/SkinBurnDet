@@ -17,7 +17,7 @@ with container:
 
 if button:
     if img and type is not None:
-        segment, time = Analyzer(img, type)
+        segment, time = Analyzer(img)
 
         st.write(f'Inference Time: **{time}ms**')
         c1, c2 = st.columns(2)
