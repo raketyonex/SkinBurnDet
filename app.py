@@ -8,13 +8,12 @@ st.markdown(f"<style>{open("stylee/style.css").read()}</style>", unsafe_allow_ht
 st.header("BurnAlyze")
 st.subheader("Detect and classify burn severity levels with AI-driven image segmentation.")
 
-b1, b2 = st.columns([4,2])
-with b1:
+_, container, _ = st.columns([2,8,2])
+with container:
     img = st.file_uploader("**Skin Image**", type=['jpg','png'])
     st.write("")
-with b2:
-    st.write("press to start!")
     button = st.button("**Identification**", type="primary", use_container_width=True)
+    st.write("")
 
 if button:
     if img and type is not None:
