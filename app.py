@@ -1,43 +1,28 @@
 import streamlit as st
-from detect import Detect
+from burnalyze import Analyzer
 
 
-hide_st_style = """
-            <style>
-            #MainMenu {visibility: hidden;}
-            footer {visibility: hidden;}
-            header {visibility: hidden;}
-            </style>
-            """
-st.markdown(hide_st_style, unsafe_allow_html=True)
+st.set_page_config("BurnAlyze | detect & classify", initial_sidebar_state="expanded")
+st.markdown(f"<style>{open("stylee/style.css").read()}</style>", unsafe_allow_html=True)
 
-img_result = None
+st.header("BurnAlyze")
+st.subheader("Detect and classify burn severity levels with AI-driven image segmentation.")
 
-with st.container(border=True):
-    st.write("**🔍 Analisa Luka Bakar**")
-
-    c1, c2 = st.columns((2), vertical_alignment="top", gap="medium", border=True)
-
-    with c1:
-        img_source = st.file_uploader("**Upload Gambar**", type=["jpg", "jpeg", "png"])
-
-        st.write("")
-        if st.button("**Deteksi**", type="primary", use_container_width=True):
-            if img_source is not None:
-                img_result = Detect(img_source)
-            else:
-                st.error(
-                    "Silakan unggah gambar terlebih dahulu sebelum melakukan prediksi."
-                )
-
-    with c2:
-        if img_source:
-            st.image(img_source, caption="Gambar Asli", use_container_width=True)
-        else:
-            st.info("**Gambar Asli** Akan Muncul Di Sini!")
-
+b1, b2 = st.columns([4,2])
+with b1:
+    img = st.file_uploader("**Skin Image**", type=['jpg','png'])
     st.write("")
-    if img_result:
-        st.image(img_result, caption="Hasil Deteksi", use_container_width=True)
-    else:
-        st.info("**Hasil Deteksi** Akan Muncul Di Sini!")
+with b2:
+    type = st.radio("**Model Type**", options=['.pt','_fp32.onnx','_fp16.onnx','_int8.onnx'], horizontal=True)
+    button = st.button("**Identification**", type="primary", use_container_width=True)
+
+if button:
+    if img and type is not None:
+        segment, time = Analyzer(img, type)
+
+        st.write(f'Inference Time: **{time}ms**')
+        c1, c2 = st.columns(2)
+        with c1:
+            st.image(image=img, caption="original image")
+        with c2:
+            st.image(image=segment, caption="detected image")
